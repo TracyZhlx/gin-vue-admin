@@ -8,6 +8,7 @@ const notLayoutRouterArr = []
 const keepAliveRoutersArr = []
 const nameMap = {}
 
+// 把数据库定义好菜单和配置和路由和views定义好 spa来进行确认
 const formatRouter = (routes, routeMap) => {
   routes && routes.forEach(item => {
     item.meta.btns = item.btns
