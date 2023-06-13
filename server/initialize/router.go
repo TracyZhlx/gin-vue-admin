@@ -1,6 +1,7 @@
 package initialize
 
 import (
+	bbsRouter "github.com/flipped-aurora/gin-vue-admin/server/router/bbs"
 	"net/http"
 
 	"github.com/flipped-aurora/gin-vue-admin/server/docs"
@@ -19,6 +20,7 @@ func Routers() *gin.Engine {
 	InstallPlugin(Router) // 安装插件
 	systemRouter := router.RouterGroupApp.System
 	exampleRouter := router.RouterGroupApp.Example
+	xkBbsRouter := new(bbsRouter.XkBbsRouter)
 	// 如果想要不使用nginx代理前端网页，可以修改 web/.env.production 下的
 	// VUE_APP_BASE_API = /
 	// VUE_APP_BASE_PATH = http://localhost
@@ -49,6 +51,9 @@ func Routers() *gin.Engine {
 	{
 		systemRouter.InitBaseRouter(PublicGroup) // 注册基础功能路由 不做鉴权
 		systemRouter.InitInitRouter(PublicGroup) // 自动初始化相关
+	}
+	{
+		xkBbsRouter.InitXkBbsRouter(PublicGroup)
 	}
 	PrivateGroup := Router.Group(global.GVA_CONFIG.System.RouterPrefix)
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
